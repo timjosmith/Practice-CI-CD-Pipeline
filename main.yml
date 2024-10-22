@@ -1,0 +1,74 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Nominal S3 Bucket for Website with Lambda Function
+
+Resources:
+  # Define the S3 Bucket for Staging
+  WebsiteBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: resume.nominal.com
+      WebsiteConfiguration:
+        IndexDocument: index.html
+
+  # Define the IAM Role for Lambda
+  LambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: LambdaS3AccessRole
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      Policies:
+        - PolicyName: LambdaS3AccessPolicy
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+              - Effect: Allow
+                Action:
+                  - s3:GetObject
+                  - s3:PutObject
+                Resource:
+                  - arn:aws:s3:::resume.timjosmith.com/*
+                  - arn:aws:s3:::resume.nominal.com/*
+
+  # Define the Lambda Function
+  MyLambdaFunction:
+    Type: AWS::Lambda::Function
+    Properties:
+      FunctionName: CopyS3Object
+      Handler: index.lambda_handler  # Ensure this matches your deployment package
+      Role: !GetAtt LambdaExecutionRole.Arn
+      Code:
+        ZipFile: |
+          import boto3
+
+          s3 = boto3.client('s3')
+
+          def lambda_handler(event, context):
+              source_bucket = 'resume.timjosmith.com'  # Production bucket
+              destination_bucket = 'resume.nominal.com'  # Staging bucket
+              file_key = 'index.html'  # The specific file to copy
+
+              try:
+                  # Define the source for the copy operation
+                  copy_source = {'Bucket': source_bucket, 'Key': file_key}
+
+                  # Copy the file from production to staging
+                  s3.copy_object(CopySource=copy_source, Bucket=destination_bucket, Key=file_key)
+                  
+                  return {
+                      'statusCode': 200,
+                      'body': f"Successfully copied {file_key} from {source_bucket} to {destination_bucket}."
+                  }
+
+              except Exception as e:
+                  return {
+                      'statusCode': 500,
+                      'body': f"Error copying file: {str(e)}"
+                  }
+      Runtime: python3.12  # Update this if you're using a different version
+      Timeout: 30  # Adjust the timeout as needed

@@ -1,0 +1,1 @@
+This is a practice project to get some hands-on experience creating a simple fully automated CI/CD pipeline.  It uses CloudFormation to create an S3 staging bucket and a Lambda function to copy an index.html file from a prod bucket to the S3 staging bucket. The goal is then to work this up into a fully automated CI/CD pipeline as per the Cloud Resume Challenge (AWS version).
