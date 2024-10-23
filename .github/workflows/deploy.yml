@@ -1,0 +1,22 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Deploy with CloudFormation
+        uses: aws-actions/aws-cloudformation-github-deploy@v1
+        with:
+          stack-name: ../../../main.yml  # Change this to your CloudFormation stack name
+          template: path/to/your/template.yaml  # Update this with the path to your CloudFormation template
+          capabilities: CAPABILITY_NAMED_IAM
+          aws-region: eu-west-2  # Update this with your desired AWS region
