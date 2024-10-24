@@ -9,15 +9,23 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    permissions:
+      id-token: write  # Needed for OIDC authentication
+      contents: read
+
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4  # Update to v4
+        uses: actions/checkout@v3
 
-      - name: Deploy with CloudFormation
-        uses: aws-actions/aws-cloudformation-github-deploy@v1
+      - name: Configure AWS credentials using OIDC
+        uses: aws-actions/configure-aws-credentials@v4
         with:
-          stack-name: resumenominalbucket  # Change this to your CloudFormation stack name
-          template: ../../../main.yml  # Update this with the path to your CloudFormation template
-          capabilities: CAPABILITY_NAMED_IAM
-          aws-region: eu-west-2  # Update this with your desired AWS region
-          role-to-assume: arn:aws:iam::401907937551:role/OIDC_practice_cicd_pipeline  # Specify the IAM role here
+          role-to-assume: arn:aws:iam::401907937551:role/OIDC_practice_cicd_pipeline
+          aws-region: eu-west-2  # Set your AWS region
+
+      - name: Deploy CloudFormation stack
+        run: |
+          aws cloudformation deploy \
+            --template-file ../../../main.yml \
+            --stack-name resumenominalbucket \
+            --capabilities CAPABILITY_NAMED_IAM
