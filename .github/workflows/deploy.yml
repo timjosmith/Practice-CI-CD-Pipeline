@@ -20,5 +20,4 @@ jobs:
           template: ./main.yml  # Path to your CloudFormation template
           capabilities: CAPABILITY_NAMED_IAM
           role-arn: arn:aws:iam::401907937551:role/OIDC_practice_cicd_pipeline  # IAM Role ARN
-        env:
-          AWS_DEFAULT_REGION: eu-west-2  # Set the AWS region as an environment variable
+          region: eu-west-2  # Set the AWS region as an environment variable
