@@ -25,5 +25,3 @@ jobs:
           name: 'resumenominalbucket'
           template: ./main.yml
           capabilities: CAPABILITY_NAMED_IAM
-
-
