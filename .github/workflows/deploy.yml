@@ -11,7 +11,13 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          role-to-assume: arn:aws:iam::401907937551:role/OIDC_practice_cicd_pipeline  # IAM Role ARN for OIDC
+          aws-region: eu-west-2  # Set AWS region
 
       - name: Deploy with CloudFormation
         uses: aws-actions/aws-cloudformation-github-deploy@v1.2.0
@@ -19,5 +25,3 @@ jobs:
           name: 'resumenominalbucket'  # Stack name
           template: ./main.yml  # Path to your CloudFormation template
           capabilities: CAPABILITY_NAMED_IAM
-          role-arn: arn:aws:iam::401907937551:role/OIDC_practice_cicd_pipeline  # IAM Role ARN
-          region: 'eu-west-2'  # Set the AWS region as an environment variable
