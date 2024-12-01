@@ -8,7 +8,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
+    permissions:
+      id-token: write  # Allows issuing an OIDC token
+      contents: read   # Grants access to the repository contents
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
