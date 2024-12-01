@@ -28,4 +28,5 @@ jobs:
           template: ./main.yml
           capabilities: CAPABILITY_NAMED_IAM
           parameter-overrides: |
-            DummyParameter=$(date +%s)
+            DummyParameter=$(date +%s) # Generate a unique timestamp
+          no-fail-on-empty-changeset: 1  # Prevent failure if no resource-level changes

@@ -11,6 +11,9 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       BucketName: resume.nominal.com
+      Tags:
+        - Key: LastUpdated
+          Value: !Ref DummyParameter
       WebsiteConfiguration:
         IndexDocument: index.html
 
