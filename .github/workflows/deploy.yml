@@ -27,5 +27,7 @@ jobs:
           name: 'resumenominalbucket'
           template: ./main.yml
           capabilities: CAPABILITY_NAMED_IAM
-          parameters: |
+          parameter-overrides: |
+            BucketName=my-custom-bucket
+            Environment=Staging
             DummyParameter=$(date +%s)
