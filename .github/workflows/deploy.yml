@@ -28,6 +28,4 @@ jobs:
           template: ./main.yml
           capabilities: CAPABILITY_NAMED_IAM
           parameter-overrides: |
-            BucketName=my-custom-bucket
-            Environment=Staging
             DummyParameter=$(date +%s)
