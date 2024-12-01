@@ -1,6 +1,10 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Description: Nominal S3 Bucket for Website with Lambda Function
 
+Parameters:
+  DummyParameter:
+    Type: String
+    Default: DefaultValue
 Resources:
   # Define the S3 Bucket for Staging
   WebsiteBucket:
