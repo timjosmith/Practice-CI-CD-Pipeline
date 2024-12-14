@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Nominal S3 Bucket for Website with Lambda Function
+Description: Sync S3 Nominal Bucket to Prod Bucket
 
 Parameters:
   DummyParameter:
