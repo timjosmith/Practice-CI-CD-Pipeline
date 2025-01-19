@@ -1,19 +1,10 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Define Production S3 Bucket for File Sync
+Description: Placeholder template for triggering pipeline
 
 Parameters:
-  ProductionBucketName:
+  DummyParameter:
     Type: String
-    Default: resume.timjosmith.com
-    Description: Name of the production S3 bucket
+    Default: DefaultValue
+    Description: Placeholder parameter to allow stack updates
 
-Resources:
-  ProductionBucket:
-    Type: AWS::S3::Bucket
-    Properties:
-      BucketName: !Ref ProductionBucketName
-      Tags:
-        - Key: Environment
-          Value: Production
-
-
+Resources: {}
