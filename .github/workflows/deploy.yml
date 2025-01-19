@@ -29,6 +29,7 @@ jobs:
           capabilities: CAPABILITY_NAMED_IAM
           parameter-overrides: |
             DummyParameter=$(date +%s)  # Allows triggering updates
+            
 
       - name: Sync index.html from staging to production
         run: |
