@@ -1,21 +1,23 @@
 AWSTemplateFormatVersion: '2010-09-09'
-Description: Sync S3 Staging Bucket to Prod Bucket
+Description: Define Production S3 Bucket for File Sync
 
 Parameters:
   DummyParameter:
     Type: String
     Default: DefaultValue
+    Description: Parameter to trigger stack updates (e.g., timestamp for uniqueness)
+
 Resources:
-  # Define the S3 Bucket for Staging
-  WebsiteBucket:
+  # Define the S3 Bucket for Production
+  ProductionBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: resume.staging.com
+      BucketName: resume.timjosmith.com
       Tags:
         - Key: LastUpdated
           Value: !Ref DummyParameter
       WebsiteConfiguration:
         IndexDocument: index.html
+    DeletionPolicy: Retain  # Prevent accidental deletion of the bucket
 
-  # Trigger update
 

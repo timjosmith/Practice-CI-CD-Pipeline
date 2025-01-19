@@ -21,12 +21,25 @@ jobs:
           role-to-assume: arn:aws:iam::401907937551:role/OIDC_practice_cicd_pipeline
           aws-region: eu-west-2
 
-      - name: Deploy with CloudFormation
+      - name: Deploy CloudFormation Stack
         uses: aws-actions/aws-cloudformation-github-deploy@v1.2.0
         with:
-          name: 'resumestagingbucket'
+          name: 'resumeprodstack'
           template: ./main.yml
           capabilities: CAPABILITY_NAMED_IAM
           parameter-overrides: |
-            DummyParameter=$(date +%s) # Generate a unique timestamp
-          no-fail-on-empty-changeset: 1  # Prevent failure if no resource-level changes
+            ProductionBucketName=resume.timjosmith.com
+          no-fail-on-empty-changeset: 1
+
+      - name: Install boto3
+        run: pip install boto3
+
+      - name: Sync files with Python script
+        run: python sync_s3.py
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: eu-west-2
+          SOURCE_BUCKET: resume.staging.com
+          DESTINATION_BUCKET: resume.timjosmith.com
+          FILE_KEY: index.html
