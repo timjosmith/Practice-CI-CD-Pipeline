@@ -1,10 +1,17 @@
-- name: Deploy CloudFormation
-  uses: aws-actions/aws-cloudformation-github-deploy@v1.2.0
-  with:
-    name: 'resumeprodstack'
-    template: ./main.yml
-    capabilities: CAPABILITY_NAMED_IAM
-    parameter-overrides: |
-      DummyParameter=$(date +%s)  # Always generate a unique timestamp
+AWSTemplateFormatVersion: '2010-09-09'
+Description: Placeholder template to force updates in the pipeline
+
+Parameters:
+  DummyParameter:
+    Type: String
+    Default: DefaultValue
+    Description: Parameter to allow stack updates dynamically
+
+Resources:
+  PlaceholderTopic:
+    Type: AWS::SNS::Topic
+    Properties:
+      DisplayName: PlaceholderTopicForPipeline
+
 
 
