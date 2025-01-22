@@ -24,7 +24,7 @@ jobs:
       - name: Deploy CloudFormation (placeholder)
         uses: aws-actions/aws-cloudformation-github-deploy@v1.2.0
         with:
-          name: 'resume-placeholder-stack'
+          name: 'resume-placeholder-stack1'
           template: ./main.yml
           capabilities: CAPABILITY_NAMED_IAM
           parameter-overrides: |
