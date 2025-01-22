@@ -30,13 +30,18 @@ jobs:
           parameter-overrides: |
             DummyParameter=$(date +%s)  # Allows triggering updates       
 
+      - name: Debug AWS environment variables
+        run: |
+          echo "AWS_ACCESS_KEY_ID=$AWS_ACCESS_KEY_ID"
+          echo "AWS_SECRET_ACCESS_KEY=$AWS_SECRET_ACCESS_KEY"
+          echo "AWS_SESSION_TOKEN=$AWS_SESSION_TOKEN"
+
       - name: Sync index.html from staging to production
         run: |
           python scripts/sync_s3.py
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: eu-west-2
           SOURCE_BUCKET: resume.staging.com
           DESTINATION_BUCKET: resume.timjosmith.com
           FILE_KEY: index.html
+
