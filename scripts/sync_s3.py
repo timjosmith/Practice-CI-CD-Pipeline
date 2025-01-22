@@ -16,7 +16,7 @@ def sync_file(source_bucket, destination_bucket, file_key):
 
 if __name__ == "__main__":
     source_bucket = os.getenv("SOURCE_BUCKET", "resume.staging.com")
-    destination_bucket = os.getenv("DESTINATION_BUCKET", "resume.timjosmith.com")
+    destination_bucket = os.getenv("DESTINATION_BUCKET", "testbucket07732")
     file_key = os.getenv("FILE_KEY", "index.html")
 
     if not source_bucket or not destination_bucket:

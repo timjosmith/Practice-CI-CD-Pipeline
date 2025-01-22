@@ -42,6 +42,6 @@ jobs:
         env:
           AWS_DEFAULT_REGION: eu-west-2
           SOURCE_BUCKET: resume.staging.com
-          DESTINATION_BUCKET: resume.timjosmith.com
+          DESTINATION_BUCKET: testbucket07732
           FILE_KEY: index.html
 
